@@ -280,31 +280,31 @@ elseif cv == 5
 elseif cv == 6
     num = round(input("Number of Participants:\n"));
     y = round(input("Discrete Response:\n"));
-    per = round(num/5);
+    per = round(num/25);
     idx = 1;
     resp = zeros(1,num);
-    for i = 1:5
+    for i = 1:25
         cnt = 1;
         while cnt <= per
             c(idx) = i;
-            if i == 1
+            if i <= 5
                 resp(idx) = y;
                 if cnt > (0.5*per)
                     resp(idx) = -y;
                 end
-            elseif i == 2
+            elseif i <= 10
                 resp(idx) = y;
                 if cnt > (0.8*per)
                     resp(idx) = -y;
                 end
-            elseif i == 3
+            elseif i <= 15
                 resp(idx) = y;
                 if cnt > (0.2*per)
                     resp(idx) = -y;
                 end
-            elseif i == 4
+            elseif i <= 20
                 resp(idx) = y;
-            elseif i == 5
+            elseif i <= 25
                 resp(idx) = -y;
             end
 
