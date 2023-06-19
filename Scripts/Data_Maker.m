@@ -126,11 +126,12 @@ elseif cv == 1
 elseif cv == 3
     skew = (input("Choose Skewness (TL L N R TR ):\n","s"));
     multiH = round(input("Choose value scale:\n"));
-    
+    num = (input("Number of Participants:\n"));
+
     if skew == "tl" || skew == "TL"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',-2.5)        
        rng('shuffle')  % For reproducibility
-       r = round(random(pd,16e3,1)*multiH, -1);
+       r = round(random(pd,num,1)*multiH, -1);
        figure(1)
        histfit(r,15,'GeneralizedExtremeValue')
        xlabel("Discrete Response (W)")
@@ -139,7 +140,7 @@ elseif cv == 3
     elseif skew == "tr" || skew == "TR"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',2.5)        
        rng('shuffle')  % For reproducibility
-       r = round(random(pd,16e3,1)*multiH, -1);
+       r = round(random(pd,num,1)*multiH, -1);
        figure(1)
        histfit(r,15,'GeneralizedExtremeValue')
        xlabel("Discrete Response (W)")
@@ -148,7 +149,7 @@ elseif cv == 3
     elseif skew == "R" || skew == "r"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',1)        
        rng('shuffle')  % For reproducibility
-       r = round(random(pd,16e3,1)*multiH, -1);
+       r = round(random(pd,num,1)*multiH, -1);
        figure(1)
        histfit(r,15,'GeneralizedExtremeValue')
        xlabel("Discrete Response (W)")
@@ -157,7 +158,7 @@ elseif cv == 3
     elseif skew == "l" || skew == "L"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',-1)        
        rng('shuffle')  % For reproducibility
-       r = round(random(pd,16e3,1)*multiH, -1);
+       r = round(random(pd,num,1)*multiH, -1);
        figure(1)
        histfit(r,15,'GeneralizedExtremeValue')
        xlabel("Discrete Response (W)")
@@ -167,18 +168,18 @@ elseif cv == 3
         std  = input('enter spread:');
         pd = makedist('Normal','mu',0,'sigma',std);        
         rng('shuffle')  % For reproducibility
-        r = round(random(pd,16e3,1)*multiH, -1);
+        r = round(random(pd,num,1)*multiH, -1);
         figure(1)
         histfit(r,15,'normal')
         xlabel("Discrete Response (W)")
         ylabel("Frequency")
         title("Discrete Response Histogram of all DR Participants")
-        ar = (trapz((r),[1:1:16e3]));
+        ar = (trapz((r),[1:1:num]));
     end
    
 
     if skew ~= "N"
-        ar = (trapz((r),[1:1:16e3]));    
+        ar = (trapz((r),[1:1:num]));    
         tolerance = input("Area Tolerance (Please scale it with your selected value scale)");
         area = (input("Area under the curve during NO SKEW:\n"));
         while round(abs((ar) - area)) > tolerance
@@ -186,13 +187,13 @@ elseif cv == 3
                     check = 1;
                     if round(abs(ar - area)) >= 100
                         r = round(r./1.5,-1);
-                        ar = abs(trapz((r),[1:1:16e3]));
+                        ar = abs(trapz((r),[1:1:num]));
                     elseif round(abs(ar - area)) >= 10
                         r = round(r./1.2,-1);
-                        ar = abs(trapz((r),[1:1:16e3]));
+                        ar = abs(trapz((r),[1:1:num]));
                     elseif round(abs(ar - area)) >= 1000
                         r =round(r./2.5, -1);
-                        ar = abs(trapz((r),[1:1:16e3]));
+                        ar = abs(trapz((r),[1:1:num]));
                     end
                     if round(abs(ar - area)) < tolerance
                         break
@@ -201,13 +202,13 @@ elseif cv == 3
                     check1 = 1;
                     if round(abs(ar - area)) >= 100
                         r = round(r.*1.5, -1);
-                        ar = abs(trapz((r),[1:1:16e3]));
+                        ar = abs(trapz((r),[1:1:num]));
                     elseif round(abs(ar - area)) >= 10
                         r = round(r.*1.2, -1);
-                        ar = abs(trapz((r),[1:1:16e3]));
+                        ar = abs(trapz((r),[1:1:num]));
                     elseif round(abs(ar - area)) >= 1000
                         r = round(r.*2.5, -1);
-                        ar = abs(trapz((r),[1:1:16e3]));
+                        ar = abs(trapz((r),[1:1:num]));
                     end
                     if round(abs(area-(ar))) < tolerance
                         break
@@ -229,14 +230,15 @@ elseif cv == 4
     st = input("set mean start time: ");
     end_t = input("set mean end time: "); 
     std = input("spread(1 is default): ");
+    num = (input("Number of Participants:\n"));
     rng('shuffle')
     pde = makedist('Normal','mu',end_t,'sigma',std);    
     pds = makedist('Normal','mu',st,'sigma',std);    
-    rs = round(random(pds,1,16e3));
-    re = round(random(pde,1,16e3));
+    rs = round(random(pds,1,num));
+    re = round(random(pde,1,num));
 
-    check = zeros(16e3,96);
-    for p = 1:16e3
+    check = zeros(num,96);
+    for p = 1:num
         if rs(p) < 0
             rs(p) = 0;
         end
@@ -263,7 +265,7 @@ elseif cv == 4
     ylabel("Available Participannts")
     xlabel("Time Interval")
     xlim([0 96])
-    ylim([0 17e3])
+    ylim([0 num+(num*.01)])
 elseif cv == 5
     imb = (input("Total imbalance:\n","s"));
     choice = input("What is larger (response or imbalance):\n","s");
@@ -309,17 +311,17 @@ elseif cv == 6
         end
     end
    elseif cv == 7
-        st = input("set mean start time: ");
-        ws = input("start range of width: "); 
-        we = input("end range of width: "); 
+        st = input("set mean time: ");
+        ws = input("width: "); 
         std  = input('enter spread:');
+        num = (input("Number of Participants:\n"));
         rng('shuffle')
         pds = makedist('Normal','mu',st,'sigma',std);
-        rd = ws + (we-ws)*rand(16e3,1);
-        rs = round(random(pds,16e3,1));
-        re = round(rs + rd);
-        check = zeros(16e3,96);
-        for p = 1:16e3
+        rd = round(random(pds,num,1));
+        rs = round(rd-ws);
+        re = round(rd+ws);
+        check = zeros(num,96);
+        for p = 1:num
             if rs(p) < 0
                 rs(p) = 0;
             end
@@ -346,5 +348,5 @@ elseif cv == 6
         ylabel("Available Participannts")
         xlabel("Time Interval")
         xlim([0 96])
-        ylim([0 17e3])
+        ylim([0 num+(num*.01)])
 end
