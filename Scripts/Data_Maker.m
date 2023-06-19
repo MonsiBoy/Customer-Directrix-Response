@@ -129,7 +129,7 @@ elseif cv == 3
     num = (input("Number of Participants:\n"));
 
     if skew == "tl" || skew == "TL"
-       pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',-2.5)        
+       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',1.5)        
        rng('shuffle')  % For reproducibility
        r = round(random(pd,num,1)*multiH, -1).';
        figure(1)
@@ -156,7 +156,7 @@ elseif cv == 3
        ylabel("Frequency")
        title("Discrete Response Histogram of all DR Participants")
     elseif skew == "l" || skew == "L"
-       pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',-1)        
+       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',1)        
        rng('shuffle')  % For reproducibility
        r = round(random(pd,num,1)*multiH, -1).';
        figure(1)
@@ -280,31 +280,31 @@ elseif cv == 5
 elseif cv == 6
     num = round(input("Number of Participants:\n"));
     y = round(input("Discrete Response:\n"));
-    per = round(num/25);
+    per = round(num/5);
     idx = 1;
     resp = zeros(1,num);
-    for i = 1:25
+    for i = 1:5
         cnt = 1;
         while cnt <= per
             c(idx) = i;
-            if i <= 5
+            if i == 1
                 resp(idx) = y;
                 if cnt > (0.5*per)
                     resp(idx) = -y;
                 end
-            elseif i <= 10
+            elseif i == 2
                 resp(idx) = y;
                 if cnt > (0.8*per)
                     resp(idx) = -y;
                 end
-            elseif i <= 15
+            elseif i == 3
                 resp(idx) = y;
                 if cnt > (0.2*per)
                     resp(idx) = -y;
                 end
-            elseif i <= 20
+            elseif i == 4
                 resp(idx) = y;
-            elseif i <= 25
+            elseif i == 5
                 resp(idx) = -y;
             end
 
