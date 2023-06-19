@@ -8,7 +8,7 @@ if cv == 2
     multiH = round(input("Choose value scale:\n"));
     
     if skew == "tl" || skew == "TL"
-       pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',-2.5)        
+       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',1)        
        rng('shuffle')  % For reproducibility
        r = random(pd,96,1)*multiH;
        figure(1)
@@ -17,7 +17,7 @@ if cv == 2
        ylabel("Frequency")
        title("Imbalance Histogram for the Entire Time Period (1 Day)")
     elseif skew == "tr" || skew == "TR"
-       pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',2.5)        
+       pd = makedist('GeneralizedExtremeValue','k',0.2,'sigma',1,'mu',-2)        
        rng('shuffle')  % For reproducibility
        r = random(pd,96,1)*multiH;
        figure(1)
@@ -26,7 +26,7 @@ if cv == 2
        ylabel("Frequency")
        title("Imbalance Histogram for the Entire Time Period (1 Day)")
     elseif skew == "R" || skew == "r"
-       pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',1)        
+       pd = makedist('GeneralizedExtremeValue','k',0.2,'sigma',1,'mu',-1)        
        rng('shuffle')  % For reproducibility
        r = random(pd,96,1)*multiH;
        figure(1)
@@ -35,7 +35,7 @@ if cv == 2
        ylabel("Frequency")
        title("Imbalance Histogram for the Entire Time Period (1 Day)")
     elseif skew == "l" || skew == "L"
-       pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',-1)        
+       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',0.5)        
        rng('shuffle')  % For reproducibility
        r = random(pd,96,1)*multiH;
        figure(1)
@@ -129,7 +129,7 @@ elseif cv == 3
     num = (input("Number of Participants:\n"));
 
     if skew == "tl" || skew == "TL"
-       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',1.5)        
+       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',1)        
        rng('shuffle')  % For reproducibility
        r = round(random(pd,num,1)*multiH, -1).';
        figure(1)
@@ -138,7 +138,7 @@ elseif cv == 3
        ylabel("Frequency")
        title("Discrete Response Histogram of all DR Participants")
     elseif skew == "tr" || skew == "TR"
-       pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',2.5)        
+       pd = makedist('GeneralizedExtremeValue','k',0.2,'sigma',1,'mu',-2)        
        rng('shuffle')  % For reproducibility
        r = round(random(pd,num,1)*multiH, -1).';
        figure(1)
@@ -147,7 +147,7 @@ elseif cv == 3
        ylabel("Frequency")
        title("Discrete Response Histogram of all DR Participants")
     elseif skew == "R" || skew == "r"
-       pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',1)        
+       pd = makedist('GeneralizedExtremeValue','k',0.2,'sigma',1,'mu',-1)        
        rng('shuffle')  % For reproducibility
        r = round(random(pd,num,1)*multiH, -1).';
        figure(1)
@@ -156,7 +156,7 @@ elseif cv == 3
        ylabel("Frequency")
        title("Discrete Response Histogram of all DR Participants")
     elseif skew == "l" || skew == "L"
-       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',1)        
+       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',0.5)        
        rng('shuffle')  % For reproducibility
        r = round(random(pd,num,1)*multiH, -1).';
        figure(1)
@@ -280,31 +280,31 @@ elseif cv == 5
 elseif cv == 6
     num = round(input("Number of Participants:\n"));
     y = round(input("Discrete Response:\n"));
-    per = round(num/5);
+    per = round(num/25);
     idx = 1;
     resp = zeros(1,num);
-    for i = 1:5
+    for i = 1:25
         cnt = 1;
         while cnt <= per
             c(idx) = i;
-            if i == 1
+            if i <= 5
                 resp(idx) = y;
                 if cnt > (0.5*per)
                     resp(idx) = -y;
                 end
-            elseif i == 2
+            elseif i <= 10
                 resp(idx) = y;
                 if cnt > (0.8*per)
                     resp(idx) = -y;
                 end
-            elseif i == 3
+            elseif i <= 15
                 resp(idx) = y;
                 if cnt > (0.2*per)
                     resp(idx) = -y;
                 end
-            elseif i == 4
+            elseif i <= 20
                 resp(idx) = y;
-            elseif i == 5
+            elseif i <= 25
                 resp(idx) = -y;
             end
 
