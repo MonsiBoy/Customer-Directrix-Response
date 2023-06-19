@@ -9,35 +9,35 @@ if cv == 2
     
     if skew == "tl" || skew == "TL"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',-2.5)        
-       rng('default')  % For reproducibility
+       rng('shuffle')  % For reproducibility
        r = random(pd,96,1)*multiH;
        figure(1)
-       histfit(r,50,'GeneralizedExtremeValue')
+       histfit(r,15,'GeneralizedExtremeValue')
     elseif skew == "tr" || skew == "TR"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',2.5)        
-       rng('default')  % For reproducibility
+       rng('shuffle')  % For reproducibility
        r = random(pd,96,1)*multiH;
        figure(1)
-       histfit(r,50,'GeneralizedExtremeValue')
+       histfit(r,15,'GeneralizedExtremeValue')
     elseif skew == "R" || skew == "r"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',1)        
-       rng('default')  % For reproducibility
+       rng('shuffle')  % For reproducibility
        r = random(pd,96,1)*multiH;
        figure(1)
-       histfit(r,50,'GeneralizedExtremeValue')
+       histfit(r,15,'GeneralizedExtremeValue')
     elseif skew == "l" || skew == "L"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',-1)        
-       rng('default')  % For reproducibility
+       rng('shuffle')  % For reproducibility
        r = random(pd,96,1)*multiH;
        figure(1)
-       histfit(r,50,'GeneralizedExtremeValue')        
+       histfit(r,15,'GeneralizedExtremeValue')        
     else
         std  = input('enter spread:')
         pd = makedist('Normal','mu',0,'sigma',std);        
-        rng('default')  % For reproducibility
+        rng('shuffle')  % For reproducibility
         r = random(pd,96,1)*multiH;
         figure(1)
-        histfit(r,50,'normal')
+        histfit(r,15,'normal')
         ar = (trapz((r),[1:1:96]));
     end
    
@@ -84,7 +84,7 @@ if cv == 2
                                 
         end
     figure(3)
-    histfit(r,50)
+    histfit(r,15)
     end
     
 elseif cv == 1
@@ -110,35 +110,35 @@ elseif cv == 3
     
     if skew == "tl" || skew == "TL"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',-2.5)        
-       rng('default')  % For reproducibility
+       rng('shuffle')  % For reproducibility
        r = random(pd,16e3,1)*multiH;
        figure(1)
-       histfit(r,50,'GeneralizedExtremeValue')
+       histfit(r,15,'GeneralizedExtremeValue')
     elseif skew == "tr" || skew == "TR"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',2.5)        
-       rng('default')  % For reproducibility
+       rng('shuffle')  % For reproducibility
        r = random(pd,16e3,1)*multiH;
        figure(1)
-       histfit(r,50,'GeneralizedExtremeValue')
+       histfit(r,15,'GeneralizedExtremeValue')
     elseif skew == "R" || skew == "r"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',1)        
-       rng('default')  % For reproducibility
+       rng('shuffle')  % For reproducibility
        r = random(pd,16e3,1)*multiH;
        figure(1)
-       histfit(r,50,'GeneralizedExtremeValue')
+       histfit(r,15,'GeneralizedExtremeValue')
     elseif skew == "l" || skew == "L"
        pd = makedist('GeneralizedExtremeValue','k',0,'sigma',1,'mu',-1)        
-       rng('default')  % For reproducibility
+       rng('shuffle')  % For reproducibility
        r = random(pd,16e3,1)*multiH;
        figure(1)
-       histfit(r,50,'GeneralizedExtremeValue')        
+       histfit(r,15,'GeneralizedExtremeValue')        
     else
         std  = input('enter spread:')
         pd = makedist('Normal','mu',0,'sigma',std);        
-        rng('default')  % For reproducibility
+        rng('shuffle')  % For reproducibility
         r = random(pd,16e3,1)*multiH;
         figure(1)
-        histfit(r,50,'normal')
+        histfit(r,15,'normal')
         ar = (trapz((r),[1:1:16e3]));
     end
    
@@ -185,13 +185,13 @@ elseif cv == 3
                                 
         end
     figure(3)
-    histfit(r,50)
+    histfit(r,15)
     end
 elseif cv == 4
     st = input("set mean start time: ");
     end_t = input("set mean end time: "); 
     std = input("spread(1 is default): ");
-    rng('default')
+    rng('shuffle')
     pde = makedist('Normal','mu',end_t,'sigma',std);    
     pds = makedist('Normal','mu',st,'sigma',std);    
     rs = round(random(pds,1,16e3));
@@ -275,7 +275,7 @@ elseif cv == 6
         ws = input("start range of width: "); 
         we = input("end range of width: "); 
         std  = input('enter spread:');
-        rng('default')
+        rng('shuffle')
         pds = makedist('Normal','mu',st,'sigma',std);
         rd = ws + (we-ws)*rand(16e3,1);
         rs = round(random(pds,16e3,1));
