@@ -15,6 +15,7 @@ Listed below are the datasets and their characteristics.
 
 To streamline the downloading of the datasets you can use [this](https://download-directory.github.io/) tool made by [Federico Brigante](https://github.com/fregante). You can check out its repository [here](https://github.com/download-directory/download-directory.github.io.git).
 
-The permalink for the entire Dataset folder is: https://github.com/MonsiBoy/Customer-Directrix-Response/tree/6146a0a69f63f7d808822e9d55d974fb876e5fc3/Dataset%20Files 
+The permalink for the entire Dataset folder is: 
+https://github.com/MonsiBoy/Customer-Directrix-Response/tree/6146a0a69f63f7d808822e9d55d974fb876e5fc3/Dataset%20Files 
 
 Just input the link [here](https://download-directory.github.io/) it will download `.zip` file to your default download directory of your local machine. 
