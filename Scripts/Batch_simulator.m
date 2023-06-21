@@ -3,15 +3,15 @@ clc;
 clear all;
 
 %%Import data
-c = input("Enter Case: ");
+cc = input("Enter Case: ");
 des = input("Enter Set Descriptor: ","s");
-x =strcat("16k-participants",int2str(c),des);
-h = input("Number of Trials:");
+x =strcat("16k-participants",int2str(cc),des);
+h = input("Number of Trials: ");
 ACDR_fulfillment = zeros(1,h);
 MSI = zeros(1,h);
 
 for trial = 1:h
-    Participants = 16e3; %input number of participants
+    Participants = 50; %input number of participants
     
     if Participants == 6
         x = '6participants.xlsx';
@@ -297,6 +297,7 @@ for trial = 1:h
 
     timed = [1:1:94]; 
     if scen == 3 || scen == 6
+        filename = strcat("SLR/","SLR_",int2str(cc),"_",des,int2str(trial),".jpg");
         figure(1)
         hold on
         stairs(timed,sum(final,2)/1000);
@@ -307,7 +308,11 @@ for trial = 1:h
         title('System Level Response');
         xlabel('Time');
         ylabel('Power (kW)');
-    
+        AXX = gca;
+        saveas(AXX,filename)
+
+
+        filename = strcat("GDC/","GDC_",int2str(cc),"_",des,int2str(trial),".jpg");
         figure(4)
         hold on
         stairs(time.',TotalGen/1000);
@@ -317,6 +322,8 @@ for trial = 1:h
         title('System-level Generation-Demand Curve');
         xlabel('Time');
         ylabel('Power (kW)');
+        AXX = gca;
+        saveas(AXX,filename);
         
         a = sum(CDR_,2);
         g = sum(final,2);
@@ -378,11 +385,11 @@ for trial = 1:h
     %% Conclusions
 
     if scen == 1 || scen == 4 ;
-      fprintf("\nNo DR event occured. The MSE between the desired load profile and the actual load profile is: %f \n", no_DR)
+      fprintf("\nNo DR event occured. The MSI between the desired load profile and the actual load profile is: %f \n", no_DR)
     elseif scen == 2 || scen == 5;
     
-      fprintf("\nDR event occured. The MSE between the desired load profile and the actual load profile is: %f", y_DR)
-      fprintf("\nWhile the MSE when there is no DR event is:%f \n", no_DR)
+      fprintf("\nDR event occured. The MSI between the desired load profile and the actual load profile is: %f", y_DR)
+      fprintf("\nWhile the MSI when there is no DR event is:%f \n", no_DR)
     
       if y_DR < no_DR
           fprintf("\nTherefore, the DR event improved the system imbalance.\n")
@@ -412,12 +419,15 @@ for trial = 1:h
 
     
     %% Histogram of ACDR
+    filename = strcat("HA/","HA_",int2str(cc),"_",des,int2str(trial),".jpg");
     figure(5)
     histogram(P_ACDR/1000);
     legend('ACDR')
     title('Histogram of ACDR');
     xlabel('Power (kW)');
     ylabel('Frequency');
+    AXX = gca;
+    saveas(AXX,filename);
     
     %% Discrete Responses of Participants in their Corresponding Groups
     mem = [];
@@ -443,20 +453,26 @@ for trial = 1:h
         capacity(z,1) = abs(cap_nega)/1000;
         capacity(z,2) = cap_posi/1000;
     end
-    
+
+    filename = strcat("DR/","DR_",int2str(cc),"_",des,int2str(trial),".jpg");
     figure(8);  
     bar(avail_grp,mem);
     legend('negative discrete responses','positive discrete responses');
     xlabel('Group Number');
     ylabel('Number of Participants');
     title('Distribution of Participants in Coalitions');
-    
+    AXX = gca;
+    saveas(AXX,filename);
+
+    filename = strcat("TDR/","TDR_",int2str(cc),"_",des,int2str(trial),".jpg");
     figure(9);
     bar(avail_grp,capacity);
     title('Total Discrete Responses per Coalition');
     xlabel('Group Number');
     ylabel('Capacity (kW)');
     legend('Load Decrease', 'Load Increase')
+    AXX = gca;
+    saveas(AXX,filename);
     
     for t=1:94
         for h=1:length(avail_grp)
@@ -466,17 +482,23 @@ for trial = 1:h
             CAP_p(t,h) = cap_time(t,group_mem,Start_t,End_t,resp,1);
         end
     end
+    filename = strcat("TLDC/","TLDC_",int2str(cc),"_",des,int2str(trial),".jpg");
     figure(10);
     bar(timed,CAP_n/1000);
     title('Total Load Decrease Capacity of Coalitions per Time')
     xlabel('Time');
     ylabel('Capacity (kW)');
-    
+    AXX = gca;
+    saveas(AXX,filename);
+
+    filename = strcat("TLDI/","TLDI_",int2str(cc),"_",des,int2str(trial),".jpg");
     figure(11);
     bar(timed,CAP_p/1000);
     title('Total Load Increase Capacity of Coalitions per Time')
     xlabel('Time');
     ylabel('Capacity (kW)');
+    AXX = gca;
+    saveas(AXX,filename);
     
     
     %% Plot percent improvement comparison
@@ -487,11 +509,13 @@ for trial = 1:h
         pi2 = immse(g,y_coa);
         pi = [abs(100*(no_DR-pi1)/no_DR), abs(100*(no_DR-pi2)/no_DR)];
         pc = categorical({'no coalitions','with coalitions'});
-        
+        filename = strcat("SPF/","SPF_",int2str(cc),"_",des,int2str(trial),".jpg");
         figure(6);
         bar(pc,pi);
         legend('Percent System Improvement')
         title('Percent Improvement Comparison')
+        AXX = gca;
+        saveas(AXX,filename);
     end
     
     %% Plot percent fulfillment per coalition
@@ -500,17 +524,21 @@ for trial = 1:h
         group_mem = cell2mat(group_mem);
         pipc(i) = coalition_pi(P_b, AfterDR_Final_indiv, final, group_mem);
     end
+    filename = strcat("CoalPF/","CoalPF_",int2str(cc),"_",des,int2str(trial),".jpg");
     figure(7);
     bar(avail_grp,pipc);
     xlabel('Group Number');
     ylabel('Percent Fulfillment');
     title('Percent Fulfillment of Each Coalition to their Corresponding CDRs')
+    AXX = gca;
+    saveas(AXX,filename);
     
     %% Plot Difference
     final_kW = sum(final,2)/1000;
     afterdr_kW = sum(AfterDR_Final_indiv,2)/1000;
     beforedr_kW = sum(P_b,2)/1000;
-    figure(12)
+        filename = strcat("ACDR/","ACDR_",int2str(cc),"_",des,int2str(trial),".jpg");
+        figure(12)
         hold on
         plot(timed,final_kW);
         plot(timed,beforedr_kW);
@@ -519,8 +547,11 @@ for trial = 1:h
         title('ACDR');
         xlabel('Time');
         ylabel('Power (kW)');
+        AXX = gca;
+        saveas(AXX,filename);
         hold off
-    
+
+        filename = strcat("ACDRF/","ACDRF_",int2str(cc),"_",des,int2str(trial),".jpg");
         figure(13)
         hold on    
         plot(timed,final_kW);
@@ -530,9 +561,12 @@ for trial = 1:h
         title('ACDR Fulfillment')
         xlabel('Time');
         ylabel('Power (kW)');
+        AXX = gca;
+        saveas(AXX,filename);
         hold off 
     
     %% Plot time shot histogram
+      %{
         figure(14)
         hold on
         for i=1:94
@@ -595,6 +629,7 @@ for trial = 1:h
         hold off
         legend('Desired Load Profile','After DR','Location', 'northwest');
     end
+    %}
     end
     
 end   
