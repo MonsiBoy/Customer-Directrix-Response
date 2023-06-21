@@ -23,8 +23,11 @@ Once these data are prepped prepare a template for this case and make 5 (1 for e
 
 Repeat this for all cases. Moreover Cases that asks for Descriptions please put the appropriate descriptor that will distinguish said case from others.
 
-**Note:**
+**Note 1:**
 In all cases you only need to input the Trial # meaning you will no longer need to put in "16k-participants<case><case type>"
+
+**Note 2:**
+If you wish to use the default dataset see the [instructions](https://github.com/MonsiBoy/Customer-Directrix-Response/blob/25cf601c35fcc99aa6780a069886df86429efcdd/Dataset%20Files/Instructions.md) for the dataset for a convenient method on downloading the entire dataset.
 
 ## Simulator
 
