@@ -186,7 +186,7 @@ elseif cv == 4
         n = strcat("16k-participants4N",trial,".xlsx");
         xlswrite(n,No,"Response","A2:WQJ2")
    end
-   
+
 elseif cv == 5
         st = input("set mean time: ");
         ws = input("width: "); 
@@ -228,8 +228,8 @@ elseif cv == 5
         ylim([0 17000])
         trial = input("Enter Trial: ","s");
         E = strcat("16k-participants5",int2str(ws),trial,".xlsx")
-        xlswrite(E,left,"Start Time","A2:WQJ2")
-        xlswrite(E,right,"End Time","A2:WQJ2")
+        xlswrite(E,rs,"Start Time","A2:WQJ2")
+        xlswrite(E,re,"End Time","A2:WQJ2")
 
 elseif cv == 7
     st = input("set mean start time: ");
@@ -274,8 +274,8 @@ elseif cv == 7
     trial = input("Enter Trial: ","s");
     type = input("Enter set description: ","s");
     E = strcat("16k-participants7",type,trial,".xlsx")
-    xlswrite(E,left,"Start Time","A2:WQJ2")
-    xlswrite(E,right,"End Time","A2:WQJ2")
+    xlswrite(E,rs,"Start Time","A2:WQJ2")
+    xlswrite(E,re,"End Time","A2:WQJ2")
 
 elseif cv == 6
     imb = (input("Total imbalance:\n","s"));
