@@ -10,6 +10,7 @@ The `Batch_Simulator.m` is designed to run n number of trials. The number of tri
 
 With that, there are a few data that the user must prepare beforehand before running `Data_Maker.m`. Each case will have different data to prepare, to determine which data should be prepared please check [Dataset Files](https://github.com/MonsiBoy/Customer-Directrix-Response/tree/main/Dataset%20Files), before proceeding
 
+### Example
 To illustrate an example a 5 trial run for Case 1 will be discussed. Case 1 requires constant Load curves, Aggregated Load Curves, Coalitions, Discrete Responses, Customer Capacities, Customer Time Slots. 
 
 Once these data are prepped prepare a template for this case and make 5 (1 for each trials) copies each file will have a unique name that follows the naming convetion. So for example the names for Skewed to the Left case  are:
@@ -22,7 +23,7 @@ Once these data are prepped prepare a template for this case and make 5 (1 for e
 
 Repeat this for all cases. Moreover Cases that asks for Descriptions please put the appropriate descriptor that will distinguish said case from others.
 
-Note:
+**Note:**
 In all cases you only need to input the Trial # meaning you will no longer need to put in "16k-participants<case><case type>"
 
 ## Simulator
