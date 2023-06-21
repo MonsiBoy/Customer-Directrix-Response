@@ -5,14 +5,14 @@ clear all;
 %%Import data
 cc = input("Enter Case: ");
 des = input("Enter Set Descriptor: ","s");
-x =strcat("16k-participants",int2str(cc),des);
+
 h = input("Number of Trials: ");
 ACDR_fulfillment = zeros(1,h);
 MSI = zeros(1,h);
 
 for trial = 1:h
     Participants = 16e3; %input number of participants
-    
+    x =strcat("16k-participants",int2str(cc),des);
     if Participants == 6
         x = '6participants.xlsx';
     elseif Participants == 20
