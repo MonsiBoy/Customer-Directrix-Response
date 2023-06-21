@@ -11,7 +11,7 @@ ACDR_fulfillment = zeros(1,h);
 MSI = zeros(1,h);
 
 for trial = 1:h
-    Participants = 50; %input number of participants
+    Participants = 16e3; %input number of participants
     
     if Participants == 6
         x = '6participants.xlsx';
