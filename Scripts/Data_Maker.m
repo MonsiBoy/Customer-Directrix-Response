@@ -4,42 +4,36 @@ fprintf('1: Number of Coalitions.\n2: Distribution of Imbalances\n3: Distributio
 cv = input("Choose what to control:");
 
 if cv == 2
-    skew = (input("Choose Skewness (TL L N R TR ):\n","s"));
+    skew = (input("Choose Skewness (N SS S):\n","s"));
     multiH = round(input("Choose value scale:\n"));
-    
-    if skew == "tl" || skew == "TL"
-       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',1)        
+      
+   if skew == "ss" || skew == "SS"
+       pdR = makedist('GeneralizedExtremeValue','k',0.1,'sigma',1,'mu',-2)  
        rng('shuffle')  % For reproducibility
-       r = random(pd,96,1)*multiH;
+       right = random(pdR,96,1)*multiH;
+       left =-1.*right;
        figure(1)
-       histfit(r,15,'GeneralizedExtremeValue')
+       histfit(right,20,'GeneralizedExtremeValue')
        xlabel("Imabalance (MW)")
        ylabel("Frequency")
        title("Imbalance Histogram for the Entire Time Period (1 Day)")
-    elseif skew == "tr" || skew == "TR"
-       pd = makedist('GeneralizedExtremeValue','k',0.2,'sigma',1,'mu',-2)        
-       rng('shuffle')  % For reproducibility
-       r = random(pd,96,1)*multiH;
-       figure(1)
-       histfit(r,15,'GeneralizedExtremeValue')
+       figure(2)
+       histfit(left,20,'GeneralizedExtremeValue')
        xlabel("Imabalance (MW)")
        ylabel("Frequency")
        title("Imbalance Histogram for the Entire Time Period (1 Day)")
-    elseif skew == "R" || skew == "r"
-       pd = makedist('GeneralizedExtremeValue','k',0.2,'sigma',1,'mu',-1)        
+    elseif skew == "S" || skew == "s"
+       pdR = makedist('GeneralizedExtremeValue','k',0.1,'sigma',1,'mu',-1)  
        rng('shuffle')  % For reproducibility
-       r = random(pd,96,1)*multiH;
+       right = random(pdR,96,1)*multiH;
+       left =-1.*right;
        figure(1)
-       histfit(r,15,'GeneralizedExtremeValue')
+       histfit(right,20,'GeneralizedExtremeValue')
        xlabel("Imabalance (MW)")
        ylabel("Frequency")
        title("Imbalance Histogram for the Entire Time Period (1 Day)")
-    elseif skew == "l" || skew == "L"
-       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',0.5)        
-       rng('shuffle')  % For reproducibility
-       r = random(pd,96,1)*multiH;
-       figure(1)
-       histfit(r,15,'GeneralizedExtremeValue') 
+       figure(2)
+       histfit(left,20,'GeneralizedExtremeValue')
        xlabel("Imabalance (MW)")
        ylabel("Frequency")
        title("Imbalance Histogram for the Entire Time Period (1 Day)")
@@ -49,62 +43,14 @@ if cv == 2
         rng('shuffle')  % For reproducibility
         r = random(pd,96,1)*multiH;
         figure(1)
-        histfit(r,15,'normal')
+        histfit(r,20,'normal')
         xlabel("Imabalance (MW)")
         ylabel("Frequency")
         title("Imbalance Histogram for the Entire Time Period (1 Day)")
-        ar = (trapz((r),[1:1:96]));
+        xlim([-1e6+min(r),max(r)+1e6]);
+        %set(gca,'XTick',[-100+min(r) : 200e3 : max(r)+100]);
 
-    end
-   
-
-    if skew ~= "N"
-        ar = abs(trapz((r),[1:1:96]));    
-        tolerance = input("Area Tolerance (Please scale it to scale/10):");
-        area = (input("Area under the curve during NO SKEW:\n"));
-        while round(abs((ar) - area)) > tolerance
-                if area < ar
-                    check = 1;
-                    if round(abs(ar - area)) >= 100
-                        r = r./1.5;
-                        ar = abs(trapz((r),[1:1:96]));
-                    elseif round(abs(ar - area)) >= 10
-                        r = r./1.2;
-                        ar = abs(trapz((r),[1:1:96]));
-                    elseif round(abs(ar - area)) >= 1000
-                        r = r./2.5;
-                        ar = abs(trapz((r),[1:1:96]));
-                    end
-                    if round(abs(ar - area)) < tolerance
-                        break
-                    end
-                elseif area > ar
-                    check1 = 1;
-                    if round(abs(ar - area)) >= 100
-                        r = r.*1.5;
-                        ar = abs(trapz((r),[1:1:96]));
-                    elseif round(abs(ar - area)) >= 10
-                        r = r.*1.2;
-                        ar = abs(trapz((r),[1:1:96]));
-                    elseif round(abs(ar - area)) >= 1000
-                        r = r.*2.5;
-                        ar = abs(trapz((r),[1:1:96]));
-                    end
-                    if round(abs(area-(ar))) < tolerance
-                        break
-                    end
-                     if check1 == 1 && check == 1
-                        break
-                    end
-                end
-                                
-        end
-    figure(3)
-    histfit(r,15)
-    xlabel("Imabalance (MW)")
-    ylabel("Frequency")
-    title("Imbalance Histogram for the Entire Time Period (1 Day)")
-    end
+   end
     
 elseif cv == 1
     num = (input("Number of Participants:\n"));
@@ -124,110 +70,55 @@ elseif cv == 1
     end
 
 elseif cv == 3
-    skew = (input("Choose Skewness (TL L N R TR ):\n","s"));
+    skew = (input("Choose Skewness (N SS S):\n","s"));
     multiH = round(input("Choose value scale:\n"));
-    num = (input("Number of Participants:\n"));
-
-    if skew == "tl" || skew == "TL"
-       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',1)        
+    num = input("Number of Participants: ")
+      
+   if skew == "ss" || skew == "SS"
+       pdR = makedist('GeneralizedExtremeValue','k',0.1,'sigma',1,'mu',-2)  
        rng('shuffle')  % For reproducibility
-       r = round(random(pd,num,1)*multiH, -1).';
+       right = random(pdR,num,1)*multiH;
+       left =-1.*right;
        figure(1)
-       histfit(r,15,'GeneralizedExtremeValue')
-       xlabel("Discrete Response (W)")
+       histfit(right,100,'GeneralizedExtremeValue')
+       xlabel("Imabalance (MW)")
        ylabel("Frequency")
-       title("Discrete Response Histogram of all DR Participants")
-    elseif skew == "tr" || skew == "TR"
-       pd = makedist('GeneralizedExtremeValue','k',0.2,'sigma',1,'mu',-2)        
+       title("Imbalance Histogram for the Entire Time Period (1 Day)")
+       figure(2)
+       histfit(left,100,'GeneralizedExtremeValue')
+       xlabel("Imabalance (MW)")
+       ylabel("Frequency")
+       title("Imbalance Histogram for the Entire Time Period (1 Day)")
+    elseif skew == "S" || skew == "s"
+       pdR = makedist('GeneralizedExtremeValue','k',0.1,'sigma',1,'mu',-1)  
        rng('shuffle')  % For reproducibility
-       r = round(random(pd,num,1)*multiH, -1).';
+       right = random(pdR,num,1)*multiH;
+       left =-1.*right;
        figure(1)
-       histfit(r,15,'GeneralizedExtremeValue')
-       xlabel("Discrete Response (W)")
+       histfit(right,100,'GeneralizedExtremeValue')
+       xlabel("Imabalance (MW)")
        ylabel("Frequency")
-       title("Discrete Response Histogram of all DR Participants")
-    elseif skew == "R" || skew == "r"
-       pd = makedist('GeneralizedExtremeValue','k',0.2,'sigma',1,'mu',-1)        
-       rng('shuffle')  % For reproducibility
-       r = round(random(pd,num,1)*multiH, -1).';
-       figure(1)
-       histfit(r,15,'GeneralizedExtremeValue')
-       xlabel("Discrete Response (W)")
+       title("Imbalance Histogram for the Entire Time Period (1 Day)")
+       figure(2)
+       histfit(left,num,'GeneralizedExtremeValue')
+       xlabel("Imabalance (MW)")
        ylabel("Frequency")
-       title("Discrete Response Histogram of all DR Participants")
-    elseif skew == "l" || skew == "L"
-       pd = makedist('GeneralizedExtremeValue','k',-0.5,'sigma',1,'mu',0.5)        
-       rng('shuffle')  % For reproducibility
-       r = round(random(pd,num,1)*multiH, -1).';
-       figure(1)
-       histfit(r,15,'GeneralizedExtremeValue')
-       xlabel("Discrete Response (W)")
-       ylabel("Frequency")
-       title("Discrete Response Histogram of all DR Participants")
+       title("Imbalance Histogram for the Entire Time Period (1 Day)")
     else
         std  = input('enter spread:');
         pd = makedist('Normal','mu',0,'sigma',std);        
         rng('shuffle')  % For reproducibility
-        r = round(random(pd,num,1)*multiH, -1).';
+        r = random(pd,num,1)*multiH;
         figure(1)
-        histfit(r,15,'normal')
-        xlabel("Discrete Response (W)")
+        histfit(r,100,'normal')
+        xlabel("Imabalance (MW)")
         ylabel("Frequency")
-        title("Discrete Response Histogram of all DR Participants")
-        ar = (trapz((r),[1:1:num]));
-    end
-   
+        title("Imbalance Histogram for the Entire Time Period (1 Day)")
+        xlim([-1e6+min(r),max(r)+1e6]);
+        %set(gca,'XTick',[-100+min(r) : 200e3 : max(r)+100]);
+   end
 
-    if skew ~= "N"
-        ar = (trapz((r),[1:1:num]));    
-        tolerance = input("Area Tolerance (Please scale it with your selected value scale)");
-        area = (input("Area under the curve during NO SKEW:\n"));
-        check = 0;
-        check1= 0;
-        while round(abs((ar) - area)) > tolerance
-                if area < ar
-                    check = 1;
-                    if round(abs(ar - area)) >= 100
-                        r = round(r./1.5,-1);
-                        ar = abs(trapz((r),[1:1:num]));
-                    elseif round(abs(ar - area)) >= 10
-                        r = round(r./1.2,-1);
-                        ar = abs(trapz((r),[1:1:num]));
-                    elseif round(abs(ar - area)) >= 1000
-                        r =round(r./2.5, -1);
-                        ar = abs(trapz((r),[1:1:num]));
-                    end
-                    if round(abs(ar - area)) < tolerance
-                        break
-                    end
-                elseif area > ar
-                    check1 = 1;
-                    if round(abs(ar - area)) >= 100
-                        r = round(r.*1.5, -1);
-                        ar = abs(trapz((r),[1:1:num]));
-                    elseif round(abs(ar - area)) >= 10
-                        r = round(r.*1.2, -1);
-                        ar = abs(trapz((r),[1:1:num]));
-                    elseif round(abs(ar - area)) >= 1000
-                        r = round(r.*2.5, -1);
-                        ar = abs(trapz((r),[1:1:num]));
-                    end
-                    if round(abs(area-(ar))) < tolerance
-                        break
-                    end
-                     if check1 == 1 && check == 1
-                        break
-                    end
-                end
-                                
-        end
-    figure(3)
-    histfit(r,15)
-    histfit(r,15,'GeneralizedExtremeValue')
-    xlabel("Discrete Response (W)")
-    ylabel("Frequency")
-    title("Discrete Response Histogram of all DR Participants")
-    end
+
 elseif cv == 4
     st = input("set mean start time: ");
     end_t = input("set mean end time: "); 
@@ -268,6 +159,7 @@ elseif cv == 4
     xlabel("Time Interval")
     xlim([0 96])
     ylim([0 num+(num*.01)])
+
 elseif cv == 5
     imb = (input("Total imbalance:\n","s"));
     choice = input("What is larger (response or imbalance):\n","s");
@@ -277,6 +169,7 @@ elseif cv == 5
     elseif choice =="imbalance"
         dis = zeros(length(num),1) + (round((imb/num))/10)
     end
+    
 elseif cv == 6
     num = round(input("Number of Participants:\n"));
     y = round(input("Discrete Response:\n"));
