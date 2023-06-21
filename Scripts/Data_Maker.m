@@ -283,14 +283,14 @@ elseif cv == 7
     end
 
 elseif cv == 6
-    scale = input("Enter Scale: ");
+    scale = input("Enter Scale (4 2 1 1/2 1/4 ): ");
     multiH = round(input("Choose value scale:\n"));
     std  = input('enter spread:');
     h = input("Number of Trials: ");
     for trial = 1:h
       pd = makedist('Normal','mu',0,'sigma',std);        
       rng('default')  % For reproducibility
-      No = (random(pd,96,1)*multiH);
+      No = (random(pd,96,1)*multiH).*scale;
       figure(1)
       histfit(No,20,'normal')
       xlabel("Imabalance (MW)")
