@@ -6,7 +6,8 @@ clear all;
 c = input("Enter Case: ");
 des = input("Enter Set Descriptor: ","s");
 x =strcat("16k-participants",int2str(c),des);
-for trial = 1:5
+h = input("Number of Trials");
+for trial = 1:h
     Participants = 16e3; %input number of participants
     
     if Participants == 6
