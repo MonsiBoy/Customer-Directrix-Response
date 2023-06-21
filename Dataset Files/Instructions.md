@@ -18,4 +18,4 @@ To streamline the downloading of the datasets you can use [this](https://downloa
 The permalink for the entire Dataset folder is: 
 https://github.com/MonsiBoy/Customer-Directrix-Response/tree/6146a0a69f63f7d808822e9d55d974fb876e5fc3/Dataset%20Files 
 
-Just input the link [here](https://download-directory.github.io/) it will download `.zip` file to your default download directory of your local machine. 
+Just input the link [here](https://download-directory.github.io/) and it will download `.zip` file to your default download directory of your local machine. 
