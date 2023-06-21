@@ -1,2 +1,2 @@
 # Customer-Directrix-Response
-Ensure you have Matlab 2023a or higher is installed in your machine. `Data_Maker.m` requires manual transfer to an Excel file (as of 6/19/2023), `README` will be updated if it is automated.
+Ensure you have Matlab 2023a or higher is installed in your machine. ~`Data_Maker.m` requires manual transfer to an Excel file (as of 6/19/2023), `README` will be updated if it is automated.~ `Data_Maker.m` is now semi-automated see [instructions](https://github.com/MonsiBoy/Customer-Directrix-Response/blob/b5eb1c7ab6d371b2ac9b95e63819007c9db6e89a/Scripts/Intructions.md).
