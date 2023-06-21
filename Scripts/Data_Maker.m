@@ -53,7 +53,7 @@ if cv == 1
             
             pd = makedist('Normal','mu',0,'sigma',std);        
             rng('shuffle')  % For reproducibility
-            No = random(pd,96,1)*multiH;
+            No = (random(pd,96,1)*multiH).';
             figure(1)
             histfit(No,20,'normal')
             xlabel("Imabalance (MW)")
@@ -176,7 +176,7 @@ elseif cv == 3
                 
                 pd = makedist('Normal','mu',0,'sigma',std);        
                 rng('shuffle')  % For reproducibility
-                No = round(random(pd,num,1)*multiH,-1);
+                No = (round(random(pd,num,1)*multiH,-1)).';
                 figure(1)
                 histfit(No,100,'normal')
                 xlabel("Discrete Responses (W)")
