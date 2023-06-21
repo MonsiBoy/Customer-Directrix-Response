@@ -285,6 +285,7 @@ elseif cv == 7
 elseif cv == 6
     scale = input("Enter Scale: ");
     multiH = round(input("Choose value scale:\n"));
+    std  = input('enter spread:');
     h = input("Number of Trials: ");
     for trial = 1:h
       pd = makedist('Normal','mu',0,'sigma',std);        
