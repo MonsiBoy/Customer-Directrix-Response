@@ -283,12 +283,20 @@ elseif cv == 7
     end
 
 elseif cv == 6
-    imb = (input("Total imbalance:\n","s"));
-    choice = input("What is larger (response or imbalance):\n","s");
-    num = (input("Number of Participants:\n"));
-    if choice == "response"
-        dis = zeros(length(num),1) + (round((imb/num))*10);
-    elseif choice =="imbalance"
-        dis = zeros(length(num),1) + (round((imb/num))/10)
-    end 
+    scale = input("Enter Scale: ");
+    multiH = round(input("Choose value scale:\n"));
+    h = input("Number of Trials: ");
+    for trial = 1:h
+      pd = makedist('Normal','mu',0,'sigma',std);        
+      rng('default')  % For reproducibility
+      No = (random(pd,96,1)*multiH);
+      figure(1)
+      histfit(No,20,'normal')
+      xlabel("Imabalance (MW)")
+      ylabel("Frequency")
+      title("Imbalance Histogram for the Entire Time Period (1 Day)")
+      %set(gca,'XTick',[-100+min(r) : 200e3 : max(r)+100]);
+      n = strcat("16k-participants4_",int2str(scale),"_",int2str(trial),".xlsx");
+      xlswrite(n,No,"Response","E2:E97")
+    end
 end
