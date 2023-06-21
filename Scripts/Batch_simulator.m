@@ -6,7 +6,9 @@ clear all;
 c = input("Enter Case: ");
 des = input("Enter Set Descriptor: ","s");
 x =strcat("16k-participants",int2str(c),des);
-h = input("Number of Trials");
+h = input("Number of Trials:");
+ACDR_fulfillment = zeros(1,h);
+
 for trial = 1:h
     Participants = 16e3; %input number of participants
     
@@ -290,6 +292,8 @@ for trial = 1:h
     
             
     %% Plot System-level Results
+    fprintf("Trial %d", trial)
+
     timed = [1:1:94]; 
     if scen == 3 || scen == 6
         figure(1)
@@ -327,6 +331,8 @@ for trial = 1:h
         before = area(g,w)*0.25/1000;
         after = area(g,z)*0.25/1000;
         fulfillment = 100*((before-after)/before);
+        [positive_f, positive_c] = pos_fulfillment(g,w,z);
+        [negative_f, negative_c] = neg_fulfillment(g,w,z);
     else
         figure(1)
         hold on
@@ -361,10 +367,14 @@ for trial = 1:h
         before = area(g,w)*0.25/1000;
         after = area(g,z)*0.25/1000;
         fulfillment = 100*((before-after)/before);
+        [positive_f, positive_c] = pos_fulfillment(g,w,z);
+        [negative_f, negative_c] = neg_fulfillment(g,w,z);
     end
     
+    ACDR_fulfillment(trial) = fulfillment;
+
     %% Conclusions
-    fprintf("Trial %d", trial)
+
     if scen == 1 || scen == 4 ;
       fprintf("\nNo DR event occured. The MSE between the desired load profile and the actual load profile is: %f \n", no_DR)
     elseif scen == 2 || scen == 5;
@@ -381,22 +391,23 @@ for trial = 1:h
            fprintf("\nTherefore, the DR event neither improved nor worsened the system imbalance\n")
       end
     elseif scen == 3 || scen == 6;
-      fprintf("\nDR event occured. The MSE between the desired load profile and the actual load profile is: %f", y_DR)
-      fprintf("\nWhile the MSE when there is no DR event is:%f \n", no_DR)
-    
       if y_DR < no_DR
-          fprintf("\nTherefore, the DR event improved the system imbalance.\n")
-          fprintf("That is a %f or %f percent improvement.\n", abs(no_DR-y_DR),abs(((no_DR-y_DR)/no_DR)*100))
+          fprintf("\nThe DR event improved the system imbalance.\n")
+          fprintf("The mean square imbalance is reduced by %f percent.\n", abs(((no_DR-y_DR)/no_DR)*100))
           fprintf("%f percent of the ACDR is fulfilled by the demand response.\n", fulfillment)
-          fprintf("ACDR: %f kWh \n", before)
-          fprintf("Unfulfilled ACDR: %f kWh \n", after)
-          fprintf("Fulfilled ACDR: %f kWh\n", before-after)
+          T1 = table([before;after;before-after],'VariableNames',{'kWh'},'RowName',{'ACDR','Unfulfilled ACDR','Fulfilled ACDR'}); 
+          T2 = table([positive_c;negative_c;fulfillment],'VariableNames',{'Percent ACDR Fulfillment (%)'},'RowName',{'Load Increase','Load Reduction','TOTAL'}); 
+          T3 = table([positive_f;negative_f],'VariableNames',{'Percentage (%)'},'RowName',{'Load Increase Fulfilled / Load Increase Demand','Load Reduction Fulfilled / Load Reduction Demand'}); 
+          disp(T1);
+          disp(T2);
+          disp(T3);
       elseif y_DR > no_DR
           fprintf("\nTherefore, the DR event worsened the system imbalance\n")
       else
            fprintf("\nTherefore, the DR event neither improved nor worsened the system imbalance\n")
       end
     end
+
     
     %% Histogram of ACDR
     figure(5)
@@ -585,6 +596,10 @@ for trial = 1:h
     end
     
 end   
+
+mean_f = mean(ACDR_fulfillment);
+fprintf('\nThe mean ACDR fulfillment of all trials is %f \n',mean_f);
+
     %% Activation Signal Program
     function [r] = activation(ACDR,prevACDR)
         %activation signal formula
@@ -708,4 +723,57 @@ end
                 num_participants = num_participants + 1;
             end
         end
+    end
+
+    function [pos_fulfillment, pos_component] = pos_fulfillment(desired,nodr,afterdr)
+        for i=1:94
+            if desired(i) > nodr(i)
+                dr_inc(i) = afterdr(i);
+                no_dr(i) = nodr(i);
+            else
+                dr_inc(i) = desired(i);
+                no_dr(i) = desired(i);
+            end
+        end
+        a = area(desired,dr_inc);
+        b = area(desired,no_dr);
+        pos_fulfillment = 100*(abs(b-a)/b);
+    
+        for i=1:94
+            if desired(i) > nodr(i)
+                dr_inc(i) = afterdr(i);
+            else
+                dr_inc(i) = nodr(i);
+            end
+        end
+        a = area(desired,dr_inc);
+        b = area(desired,nodr);
+        pos_component = 100*(abs(b-a)/b);
+    
+    end
+    
+    function [neg_fulfillment, neg_component] = neg_fulfillment(desired,nodr,afterdr)
+        for i=1:94
+            if desired(i) < nodr(i)
+                dr_dec(i) = afterdr(i);
+                no_dr(i) = nodr(i);
+            else
+                dr_dec(i) = desired(i);
+                no_dr(i) = desired(i);
+            end
+        end
+        a = area(desired,dr_dec)*0.25/1000;
+        b = area(desired,no_dr)*0.25/1000;
+        neg_fulfillment = (100*(abs(b-a)/b));
+    
+        for i=1:94
+            if desired(i) < nodr(i)
+                dr_dec(i) = afterdr(i);
+            else
+                dr_dec(i) = nodr(i);
+            end
+        end
+        a = area(desired,dr_dec)*0.25/1000;
+        b = area(desired,nodr)*0.25/1000;
+        neg_component = (100*(abs(b-a)/b));
     end
