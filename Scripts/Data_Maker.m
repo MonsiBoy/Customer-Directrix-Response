@@ -102,7 +102,7 @@ elseif cv == 2
     end
     trial = input("Enter Trial: ","s");
     n = strcat("16k-participants2",trial,".xlsx");
-    xlswrite(n,No,"Area","A2:WQJ2")
+    xlswrite(n,c,"Area","A2:WQJ2")
     
 elseif cv == 3
     num = (input("Number of Participants:\n"));
@@ -122,7 +122,7 @@ elseif cv == 3
     end
     trial = input("Enter Trial: ","s");
     n = strcat("16k-participants3",trial,".xlsx");
-    xlswrite(n,No,"Area","A2:WQJ2")
+    xlswrite(n,c,"Area","A2:WQJ2")
 
 elseif cv == 4
     skew = (input("Choose Skewness (N SS S):\n","s"));
