@@ -8,6 +8,7 @@ des = input("Enter Set Descriptor: ","s");
 x =strcat("16k-participants",int2str(c),des);
 h = input("Number of Trials:");
 ACDR_fulfillment = zeros(1,h);
+MSI = zeros(1,h);
 
 for trial = 1:h
     Participants = 16e3; %input number of participants
@@ -371,6 +372,7 @@ for trial = 1:h
         [negative_f, negative_c] = neg_fulfillment(g,w,z);
     end
     
+    MSI(trial) = abs(((no_DR-y_DR)/no_DR)*100);
     ACDR_fulfillment(trial) = fulfillment;
 
     %% Conclusions
@@ -598,7 +600,9 @@ for trial = 1:h
 end   
 
 mean_f = mean(ACDR_fulfillment);
+mean_MSI = mean(MSI);
 fprintf('\nThe mean ACDR fulfillment of all trials is %f \n',mean_f);
+fprintf('\nThe mean MSI reduction of all trials is %f \n',mean_MSI);
 
     %% Activation Signal Program
     function [r] = activation(ACDR,prevACDR)
