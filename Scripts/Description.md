@@ -14,11 +14,11 @@ To illustrate an example a 5 trial run for Case 1 will be discussed. Case 1 requ
 
 Once these data are prepped prepare a template for this case and make 5 (1 for each trials) copies each file will have a unique name that follows the naming convetion. So for example the names for Skewed to the Left case  are:
 
-16k-participants1TL1
-16k-participants1TL2
-16k-participants1TL3
-16k-participants1TL4
-16k-participants1TL5
+-16k-participants1TL1
+-16k-participants1TL2
+-16k-participants1TL3
+-16k-participants1TL4
+-16k-participants1TL5
 
 Repeat this for all cases. Moreover Cases that asks for Descriptions please put the appropriate descriptor that will distinguish said case from others.
 
