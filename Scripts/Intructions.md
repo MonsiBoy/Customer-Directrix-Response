@@ -34,3 +34,7 @@ If you wish to use the default dataset see the [instructions](https://github.com
 Once you have obtained the desired datasets ensure that `simulator.m` and the dataset files are within the same path. Choose the desired option as prompted by the script. 
 
 The `simulator.m` has a version that runs all trials of a particular case called `batch_simulator.m`. Currently it is fixed to run on 16k participants, this can be easily changed by changing the `Participants` variable of said script.
+
+### Batch Simulator
+To handle large batch of simulations `batch_simulator.m` has features designed to facilitate large batches of data such as automated image exporting and finding the average results across the trials. To ensure that the script works, `DirectoryBuilder.m` must be run first to ensure all required directories are made.
+ 
