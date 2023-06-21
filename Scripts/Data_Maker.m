@@ -111,7 +111,6 @@ elseif cv == 3
     num = round(input("Number of Participants:\n"));
     coal = round(input("Number of coalitions:\n"));
     per = round(num/coal);
-    std  = input('enter spread:');
     h = input("Number of Trials: ");
     for trial = 1:h
         c = zeros(1,num);
@@ -131,6 +130,7 @@ elseif cv == 3
         skew = (input("Choose Skewness (N SS S):\n","s"));
         multiH = round(input("Choose value scale:\n"));
         num = input("Number of Participants: ")
+        std  = input('enter spread:');
         h = input("Number of Trials: ");
         for trial = 1:h  
             if skew == "ss" || skew == "SS"
