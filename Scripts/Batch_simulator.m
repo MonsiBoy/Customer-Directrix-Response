@@ -5,11 +5,13 @@ clear all;
 %%Import data
 cc = input("Enter Case: ");
 des = input("Enter Set Descriptor: ","s");
-
+m =3.5
 h = input("Number of Trials: ");
 ACDR_fulfillment = zeros(1,h);
 MSI = zeros(1,h);
-
+if cc == 4
+    m = 1
+end
 for trial = 1:h
     Participants = 16e3; %input number of participants
     x =strcat("16k-participants",int2str(cc),des);
@@ -51,7 +53,7 @@ for trial = 1:h
     Capacity = (xlsread(x, 'CAPACITY'));  % DR capacity of participants for a day
     Start_t = xlsread(x, 'Start Time'); % Start time of preferred time slot of participants
     End_t = xlsread(x, 'End Time'); % End time of preffered time slot of participants
-    resp = (xlsread(x, 'Response'));  % Discrete flexible load of participants
+    resp = (xlsread(x, 'Response')).*3.5;  % Discrete flexible load of participants
     loc =  xlsread(x, 'Area');  % area of participant's location
     [time data] = size(LoadCurve);
     
