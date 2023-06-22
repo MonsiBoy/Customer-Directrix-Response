@@ -53,7 +53,7 @@ if cv == 1
             
             pd = makedist('Normal','mu',0,'sigma',std);        
             rng('shuffle')  % For reproducibility
-            No = (random(pd,96,1)*multiH).';
+            No = (random(pd,96,1)*multiH);
             figure(1)
             histfit(No,20,'normal')
             xlabel("Imabalance (MW)")
