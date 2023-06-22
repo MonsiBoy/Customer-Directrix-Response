@@ -37,4 +37,18 @@ The `simulator.m` has a version that runs all trials of a particular case called
 
 ### Batch Simulator
 To handle large batch of simulations `batch_simulator.m` has features designed to facilitate large batches of data such as automated image exporting and finding the average results across the trials. To ensure that the script works, `DirectoryBuilder.m` must be run first to ensure all required directories are made.
- 
+
+### Directory Builder
+This script produces 11 directories. Each directories will store unique plots that represent a certain result of the simulation. The results stored on each directory is listed below:
+
+- ACDR (ACDR)
+- ACDRF (ACDR Fulfillment)
+- CoalPF (Coalition Performance)
+- DR (Discrete Responses)
+- GDC (Generation - Demand Curve)
+- HA (ACDR Histogram)
+- SLR (System Level Response)
+- SPF (System Performance)
+- TDR (Total Discrete Response)
+- TLDC (Total Load Demand Decrease)
+- TLDI (Total Load Demand Increase)
