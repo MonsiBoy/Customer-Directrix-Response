@@ -5,13 +5,14 @@ clear all;
 %%Import data
 cc = input("Enter Case: ");
 des = input("Enter Set Descriptor: ","s");
-m =3.5
 h = input("Number of Trials: ");
+m = 3.5;
 ACDR_fulfillment = zeros(1,h);
 MSI = zeros(1,h);
-if cc == 4
-    m = 1
-end
+Increase = zeros(1,h);
+Decrease = zeros(1,h);
+deco_inc = zeros(1,h);
+deco_dec = zeros(1,h);
 for trial = 1:h
     Participants = 16e3; %input number of participants
     x =strcat("16k-participants",int2str(cc),des);
@@ -53,7 +54,7 @@ for trial = 1:h
     Capacity = (xlsread(x, 'CAPACITY'));  % DR capacity of participants for a day
     Start_t = xlsread(x, 'Start Time'); % Start time of preferred time slot of participants
     End_t = xlsread(x, 'End Time'); % End time of preffered time slot of participants
-    resp = (xlsread(x, 'Response')).*3.5;  % Discrete flexible load of participants
+    resp = (xlsread(x, 'Response'));  % Discrete flexible load of participants
     loc =  xlsread(x, 'Area');  % area of participant's location
     [time data] = size(LoadCurve);
     
@@ -384,6 +385,12 @@ for trial = 1:h
     MSI(trial) = abs(((no_DR-y_DR)/no_DR)*100);
     ACDR_fulfillment(trial) = fulfillment;
 
+    Increase(trial) = positive_f;
+    Decrease(trial) = negative_f;
+
+    deco_inc(trial) = positive_c;
+    deco_dec(trial) = negative_c;
+
     %% Conclusions
 
     if scen == 1 || scen == 4 ;
@@ -638,8 +645,19 @@ end
 
 mean_f = mean(ACDR_fulfillment);
 mean_MSI = mean(MSI);
+mean_Increase = mean(Increase);
+mean_Decrease = mean(Decrease);
+mean_deco_inc = mean(deco_inc);
+mean_deco_dec = mean(deco_dec);
+
 fprintf('\nThe mean ACDR fulfillment of all trials is %f \n',mean_f);
 fprintf('\nThe mean MSI reduction of all trials is %f \n',mean_MSI);
+
+fprintf('\nThe mean Load Increase Fulfilled / Load Increase Demand  of all trials is %f \n',mean_Increase);
+fprintf('\nThe mean Load Reduction Fulfilled / Load Reduction Demand of all trials is %f \n',mean_Decrease);
+
+fprintf('\nThe mean Load Increase fulfillment of all trials is %f \n',mean_deco_inc);
+fprintf('\nThe mean Load Decrease fulfillment of all trials is %f \n',mean_deco_dec);
 
     %% Activation Signal Program
     function [r] = activation(ACDR,prevACDR)
