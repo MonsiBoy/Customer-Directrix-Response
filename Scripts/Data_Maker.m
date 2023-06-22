@@ -31,7 +31,7 @@ if cv == 1
            xlswrite(R,right,"Generation","E2:E97")
            
         elseif skew == "S" || skew == "s"
-           pdR = makedist('GeneralizedExtremeValue','k',0.1,'sigma',1,'mu',-1)  
+           pdR = makedist('GeneralizedExtremeValue','k',0.05,'sigma',1,'mu',-1)  
            rng('shuffle')  % For reproducibility
            right = random(pdR,96,1)*multiH;
            left =-1.*right;
