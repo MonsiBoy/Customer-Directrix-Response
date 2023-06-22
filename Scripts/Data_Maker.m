@@ -105,6 +105,8 @@ elseif cv == 2
         end
         n = strcat("16k-participants2",int2str(trial),".xlsx");
         xlswrite(n,c,"Area","A2:WQJ2")
+        xlswrite(n,resp,"Response","A2:WQJ2")
+
     end
     
 elseif cv == 3
