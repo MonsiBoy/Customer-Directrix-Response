@@ -13,9 +13,13 @@ Increase = zeros(1,h);
 Decrease = zeros(1,h);
 deco_inc = zeros(1,h);
 deco_dec = zeros(1,h);
+if cc == 2
+    mean_fulfillment = zeros(1,5);
+end
 if cc == 4
     m =1;
 end
+
 for trial = 1:h
     Participants = 16e3; %input number of participants
     x =strcat("16k-participants",int2str(cc),des);
@@ -295,7 +299,7 @@ for trial = 1:h
                    yes_coa_DR = AfterDR_Final_indiv;
             end    
     end
-    
+   
     
             
     %% Plot System-level Results
@@ -544,6 +548,11 @@ for trial = 1:h
     title('Percent Fulfillment of Each Coalition to their Corresponding CDRs')
     AXX = gca;
     saveas(AXX,filename);
+    if cc == 2
+        for i=1:5
+            group_f(trial,i) = pipc(5*i)
+        end
+    end
     
     %% Plot Difference
     final_kW = sum(final,2)/1000;
@@ -652,6 +661,11 @@ mean_Increase = mean(Increase);
 mean_Decrease = mean(Decrease);
 mean_deco_inc = mean(deco_inc);
 mean_deco_dec = mean(deco_dec);
+if cc == 2
+    for i=1:5
+        mean_fulfillment(i) = mean(group_f(:,i));
+    end
+end
 
 fprintf('\nThe mean ACDR fulfillment of all trials is %f \n',mean_f);
 fprintf('\nThe mean MSI reduction of all trials is %f \n',mean_MSI);
@@ -661,6 +675,12 @@ fprintf('\nThe mean Load Reduction Fulfilled / Load Reduction Demand of all tria
 
 fprintf('\nThe mean Load Increase fulfillment of all trials is %f \n',mean_deco_inc);
 fprintf('\nThe mean Load Decrease fulfillment of all trials is %f \n',mean_deco_dec);
+
+if cc == 2
+     fprintf('\n Mean Fulfillment depending on Coalition Composition:\n');
+     T = table([mean_fulfillment(1);mean_fulfillment(2);mean_fulfillment(3);mean_fulfillment(4);mean_fulfillment(5)],'VariableNames',{'Mean Percent Fulfillment'},'RowName',{'50:50','20:80','80:20','0:100','100:0'}); 
+     disp(T);
+end
 
     %% Activation Signal Program
     function [r] = activation(ACDR,prevACDR)
