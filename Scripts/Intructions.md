@@ -3,7 +3,7 @@
 ## Dataset Creator
 Run `Data_Maker.m` first to create all desired datasets. A sample format and used datasets can be found in [Dataset Files](https://github.com/MonsiBoy/Customer-Directrix-Response/tree/main/Dataset%20Files). Before proceeding the scripts will be using the following name convention, it is imperative to follow this convention to ensure that no edits will be necessary to run the scripts:
 
-16k-participants<case number><test><trial>.xlsx
+16k-participants\<case number\>\<test\>\<trial\>.xlsx
 (ex. 16k-participants1TL1)
 
 The `Batch_Simulator.m` is designed to run n number of trials. The number of trials will be left to discretion of the user. 
