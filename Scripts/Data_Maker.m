@@ -136,7 +136,7 @@ elseif cv == 3
         h = input("Number of Trials: ");
         for trial = 1:h  
             if skew == "ss" || skew == "SS"
-               pdR = makedist('GeneralizedExtremeValue','k',0.1,'sigma',1,'mu',-2)  
+               pdR = makedist('GeneralizedExtremeValue','k',0.1,'sigma',1,'mu',-4)  
                rng('shuffle')  % For reproducibility
                right = round(random(pdR,num,1)*multiH,-1).';
                left =-1.*right;
@@ -156,7 +156,7 @@ elseif cv == 3
                xlswrite(R,right,"Response","A2:WQJ2")
         
             elseif skew == "S" || skew == "s"
-               pdR = makedist('GeneralizedExtremeValue','k',0.1,'sigma',1,'mu',-1)  
+               pdR = makedist('GeneralizedExtremeValue','k',0.05,'sigma',1,'mu',-1)  
                rng('shuffle')  % For reproducibility
                right = round(random(pdR,num,1)*multiH,-1).';
                left =-1.*right;
